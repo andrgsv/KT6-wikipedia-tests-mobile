@@ -32,3 +32,6 @@ def test_article_can_be_saved_without_login(driver):
     article.save_article()
 
     assert article.title_text(), "После сохранения статьи пользователь должен остаться на странице статьи"
+
+
+
