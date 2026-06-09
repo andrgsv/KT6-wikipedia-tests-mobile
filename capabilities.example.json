@@ -1,0 +1,11 @@
+{
+  "platformName": "Android",
+  "appium:automationName": "UiAutomator2",
+  "appium:deviceName": "emulator-5554",
+  "appium:platformVersion": "14",
+  "appium:appPackage": "org.wikipedia",
+  "appium:appActivity": "org.wikipedia.main.MainActivity",
+  "appium:noReset": false,
+  "appium:autoGrantPermissions": true,
+  "appium:newCommandTimeout": 120
+}
