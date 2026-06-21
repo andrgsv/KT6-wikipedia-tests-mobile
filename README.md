@@ -14,40 +14,6 @@ Wikipedia подходит для учебного мобильного тест
 - есть понятная функциональность: запуск приложения, поиск, открытие статьи, сохранение статьи, навигация, настройки;
 - приложение можно запускать на эмуляторе или реальном Android-устройстве через Appium.
 
-## Структура проекта
-
-```text
-wikipedia_appium_tests_KT6/
-├── docs/
-│   ├── appium_setup_windows_linux.md
-│   ├── checklist.md
-│   ├── defect_reports.md
-│   ├── jira_cards.md
-│   ├── mobile_platform_specifics.md
-│   ├── test_cases.md
-│   ├── test_plan.md
-│   ├── test_report.md
-│   ├── traceability_matrix.md
-│   ├── KT6_report_Wikipedia.docx
-│   └── KT6_report_Wikipedia.pdf
-├── pages/
-│   ├── article_page.py
-│   ├── base_page.py
-│   ├── main_page.py
-│   ├── navigation_page.py
-│   ├── onboarding_page.py
-│   └── search_page.py
-├── tests/
-│   ├── test_article.py
-│   ├── test_navigation.py
-│   ├── test_onboarding.py
-│   └── test_search.py
-├── capabilities.example.json
-├── conftest.py
-├── pytest.ini
-├── README.md
-└── requirements.txt
-```
 
 ## Что проверяется
 
