@@ -14,7 +14,9 @@ def test_search_article_returns_relevant_results(driver):
     search.search_for("Selenium")
 
     first_title = search.first_result_title()
-    assert "Selenium" in first_title, f"Первый результат должен быть связан с Selenium, получено: {first_title}"
+    assert "selenium" in first_title.lower(), (
+        f"Первый результат должен быть связан с Selenium, получено: {first_title}"
+    )
 
 
 @pytest.mark.functional

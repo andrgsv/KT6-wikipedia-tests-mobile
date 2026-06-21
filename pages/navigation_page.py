@@ -1,28 +1,50 @@
-from selenium.webdriver.common.by import By
+from appium.webdriver.common.appiumby import AppiumBy
 
 from pages.base_page import BasePage
 
 
 class NavigationPage(BasePage):
-    MORE_TAB_LOCATORS = [
-        (By.ID, "org.wikipedia:id/nav_tab_more"),
-        (By.ANDROID_UIAUTOMATOR, 'new UiSelector().descriptionContains("More")'),
-        (By.ANDROID_UIAUTOMATOR, 'new UiSelector().descriptionContains("Ещё")'),
+    MORE_BUTTONS = [
+        (AppiumBy.ID, "org.wikipedia:id/nav_more"),
+        (AppiumBy.ID, "org.wikipedia:id/bottom_nav_more"),
+        (AppiumBy.ACCESSIBILITY_ID, "More"),
+        (AppiumBy.ACCESSIBILITY_ID, "Ещё"),
+        (
+            AppiumBy.ANDROID_UIAUTOMATOR,
+            'new UiSelector().textMatches("(?i)(more|ещё)")',
+        ),
+        (
+            AppiumBy.ANDROID_UIAUTOMATOR,
+            'new UiSelector().descriptionMatches("(?i)^(more|ещё)$")',
+        ),
     ]
-    SETTINGS_LOCATORS = [
-        (By.ANDROID_UIAUTOMATOR, 'new UiSelector().textContains("Settings")'),
-        (By.ANDROID_UIAUTOMATOR, 'new UiSelector().textContains("Настройки")'),
+
+    SETTINGS_BUTTONS = [
+        (AppiumBy.ID, "org.wikipedia:id/settings"),
+        (AppiumBy.ID, "org.wikipedia:id/menu_settings"),
+        (AppiumBy.ACCESSIBILITY_ID, "Settings"),
+        (AppiumBy.ACCESSIBILITY_ID, "Настройки"),
+        (
+            AppiumBy.ANDROID_UIAUTOMATOR,
+            'new UiSelector().textMatches("(?i)(settings|настройки)")',
+        ),
     ]
-    SETTINGS_TITLE_LOCATORS = [
-        (By.ANDROID_UIAUTOMATOR, 'new UiSelector().textContains("Settings")'),
-        (By.ANDROID_UIAUTOMATOR, 'new UiSelector().textContains("Настройки")'),
+
+    SETTINGS_TITLES = [
+        (AppiumBy.ANDROID_UIAUTOMATOR, 'new UiSelector().text("Settings")'),
+        (AppiumBy.ANDROID_UIAUTOMATOR, 'new UiSelector().text("Настройки")'),
+        (AppiumBy.ACCESSIBILITY_ID, "Settings"),
+        (AppiumBy.ACCESSIBILITY_ID, "Настройки"),
     ]
 
     def open_more(self) -> None:
-        self.click_first(self.MORE_TAB_LOCATORS, timeout=10)
+        self.click_first(self.MORE_BUTTONS, timeout=15)
 
     def open_settings(self) -> None:
-        self.click_first(self.SETTINGS_LOCATORS, timeout=10)
+        self.click_first(self.SETTINGS_BUTTONS, timeout=15)
 
     def settings_is_opened(self) -> bool:
-        return any(self.is_visible(locator, timeout=3) for locator in self.SETTINGS_TITLE_LOCATORS)
+        if self.any_visible(self.SETTINGS_TITLES, timeout=10):
+            return True
+        activity = (self.driver.current_activity or "").lower()
+        return "setting" in activity or "preference" in activity

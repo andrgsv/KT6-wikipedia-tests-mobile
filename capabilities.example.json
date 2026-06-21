@@ -2,10 +2,12 @@
   "platformName": "Android",
   "appium:automationName": "UiAutomator2",
   "appium:deviceName": "emulator-5554",
-  "appium:platformVersion": "14",
+  "appium:platformVersion": "17",
   "appium:appPackage": "org.wikipedia",
   "appium:appActivity": "org.wikipedia.main.MainActivity",
-  "appium:noReset": false,
+  "appium:noReset": true,
+  "appium:forceAppLaunch": true,
+  "appium:shouldTerminateApp": true,
   "appium:autoGrantPermissions": true,
   "appium:newCommandTimeout": 120
 }

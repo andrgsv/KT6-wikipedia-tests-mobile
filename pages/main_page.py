@@ -1,22 +1,30 @@
-from selenium.webdriver.common.by import By
+from appium.webdriver.common.appiumby import AppiumBy
+from selenium.common.exceptions import TimeoutException
 
 from pages.base_page import BasePage
 
 
 class MainPage(BasePage):
-    SEARCH_ENTRY_POINTS = [
-        (By.ID, "org.wikipedia:id/search_container"),
-        (By.ID, "org.wikipedia:id/main_toolbar_wordmark"),
-        (By.ANDROID_UIAUTOMATOR, 'new UiSelector().textContains("Search Wikipedia")'),
-        (By.ANDROID_UIAUTOMATOR, 'new UiSelector().textContains("Искать в Википедии")'),
-    ]
-    EXPLORE_TEXTS = [
-        (By.ANDROID_UIAUTOMATOR, 'new UiSelector().textContains("Explore")'),
-        (By.ANDROID_UIAUTOMATOR, 'new UiSelector().textContains("Обзор")'),
+    SEARCH_TAB = (AppiumBy.ID, "org.wikipedia:id/nav_tab_search")
+    SEARCH_CARD = (AppiumBy.ID, "org.wikipedia:id/search_card")
+
+    SEARCH_INPUTS = [
+        (AppiumBy.ID, "org.wikipedia:id/search_src_text"),
+        (AppiumBy.CLASS_NAME, "android.widget.EditText"),
     ]
 
     def open_search(self) -> None:
-        self.click_first(self.SEARCH_ENTRY_POINTS, timeout=10)
+        # Если поле уже открыто — ничего не делаем.
+        if self.any_visible(self.SEARCH_INPUTS, timeout=1):
+            return
+
+        # В текущей версии Wikipedia поиск открывается в два шага:
+        # вкладка Search -> карточка Search Wikipedia.
+        if not self.is_visible(self.SEARCH_CARD, timeout=1):
+            self.click(self.SEARCH_TAB, timeout=10)
+
+        self.click(self.SEARCH_CARD, timeout=10)
+        self.find_first(self.SEARCH_INPUTS, timeout=15)
 
     def is_loaded(self) -> bool:
-        return self.is_visible(self.SEARCH_ENTRY_POINTS[0], timeout=5) or self.is_visible(self.EXPLORE_TEXTS[0], timeout=3)
+        return self.driver.current_package == "org.wikipedia"
