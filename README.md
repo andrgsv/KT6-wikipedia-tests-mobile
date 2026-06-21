@@ -115,11 +115,6 @@ $env:APPIUM_CAPS_FILE="C:\path\to\capabilities.json"
 pytest
 ```
 
-### Linux/macOS
-
-```bash
-APPIUM_CAPS_FILE=/path/to/capabilities.json pytest
-```
 
 ## Примечание
 
